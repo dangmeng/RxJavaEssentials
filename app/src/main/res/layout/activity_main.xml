@@ -32,6 +32,7 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cd_observer"
             android:padding="5dp"
             android:layout_width="0dp"
             android:layout_height="75dp"

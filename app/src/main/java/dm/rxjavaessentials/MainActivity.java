@@ -3,8 +3,10 @@ package dm.rxjavaessentials;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -15,6 +17,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dm.rxjavaessentials.model.AppInfo;
 import dm.rxjavaessentials.service.AppInfoService;
 import dm.rxjavaessentials.utils.DimenUtils;
@@ -44,17 +47,13 @@ public class MainActivity extends SupportActivity {
         AppInfoService appInfoService = new AppInfoService(this);
         Observable<List<AppInfo>> apps = appInfoService.getApps();
         apps.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<AppInfo>>() {
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Subscriber<List<AppInfo>>() {
             @Override
-            public void onCompleted() {
-
-            }
+            public void onCompleted() {}
 
             @Override
-            public void onError(Throwable e) {
-
-            }
+            public void onError(Throwable e) {}
 
             @Override
             public void onNext(List<AppInfo> appInfos) {
@@ -64,6 +63,15 @@ public class MainActivity extends SupportActivity {
                 }
             }
         });
+    }
+
+    @OnClick(R.id.cd_observer)
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.cd_observer:
+                Toast.makeText(this,"lala",Toast.LENGTH_LONG).show();
+                break;
+        }
     }
 
     /**set icon to textview*/
