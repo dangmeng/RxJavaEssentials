@@ -2,30 +2,22 @@ package dm.rxjavaessentials;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.typeface.IIcon;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import dm.rxjavaessentials.model.AppInfo;
-import dm.rxjavaessentials.service.AppInfoService;
+import dm.rxjavaessentials.router.Router;
+import dm.rxjavaessentials.ui.ObserverActivity;
 import dm.rxjavaessentials.utils.DimenUtils;
 import me.yokeyword.fragmentation.SupportActivity;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class MainActivity extends SupportActivity {
 
@@ -43,33 +35,15 @@ public class MainActivity extends SupportActivity {
 
         setIconToImageView(iconObserver,FontAwesome.Icon.faw_smile_o);
         setIconToImageView(iconJust,FontAwesome.Icon.faw_smile_o);
-
-        AppInfoService appInfoService = new AppInfoService(this);
-        Observable<List<AppInfo>> apps = appInfoService.getApps();
-        apps.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Subscriber<List<AppInfo>>() {
-            @Override
-            public void onCompleted() {}
-
-            @Override
-            public void onError(Throwable e) {}
-
-            @Override
-            public void onNext(List<AppInfo> appInfos) {
-                Log.e("APPINFO==",appInfos.size()+"");
-                for (AppInfo appInfo : appInfos) {
-                    Log.e("APPINFO==",appInfo.toString());
-                }
-            }
-        });
     }
 
     @OnClick(R.id.cd_observer)
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.cd_observer:
-                Toast.makeText(this,"lala",Toast.LENGTH_LONG).show();
+                Router.newIntent(this)
+                        .to(ObserverActivity.class)
+                        .launch();
                 break;
         }
     }

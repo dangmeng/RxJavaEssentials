@@ -17,7 +17,10 @@ public abstract class BaseActivity extends SwipeBackActivity{
         super.onCreate(savedInstanceState);
         setContentView(getLayoutRes());
         ButterKnife.bind(this);
+        initData();
     }
+
+    protected abstract void initData();
 
     protected abstract int getLayoutRes();
 }
